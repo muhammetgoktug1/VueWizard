@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wizard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel='stylesheet' type='text/css' href='https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' media='all' id='layerslider-css' />
+    <link rel="stylesheet" href="main.css" />
+</head>
+<body style="background-color: #FBF9F6;">
+    <div id="loading" style="width:100vw; height:100vh; background-color:#f8f8f8; position:fixed;z-index:999999"></div>
+    <!-- container fluid start -->
+    <div id="wizard" class="container-fluid ">
+        <div id="" class="row">
+    
+            <!-- container start -->
+            <div id="" class="container p-5 mt-5 bg-white rounded wizard-container" v-if="success === false">
+                <div id="" class="row">
+                    <div id="" class="col-md-5 ">
+                        
+                        <div class="d-block wizard-left-main" :class="{ 'active' : step === 1 }">
+                            <div class="d-inline-block float-left wizard-icon">
+                                <span class="text" :class="{ 'd-none' : step != 1 }">1</span>
+                                <i class="step-check fa fa-check" :class="{ 'd-inline-block' : step != 1 }"></i>
+                            </div>
+                            <div class="d-inline-block w-50 wizard-text">
+                                <span class="d-block title font-weight-bold">Account Settings</span>
+                                <span class="d-block small text-secondary text">Setup Your Account Details</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-block wizard-left-main mt-4" :class="{ 'active' : step === 2 }">
+                            <div class="d-inline-block float-left wizard-icon">
+                                <span class="text" :class="{ 'd-none' : step === 3 }">2</span>
+                                <i class="step-check fa fa-check" :class="{ 'd-inline-block' : step === 3 }"></i>
+                            </div>
+                            <div class="d-inline-block w-50 wizard-text">
+                                <span class="d-block title font-weight-bold">Setup Location</span>
+                                <span class="d-block small text-secondary text">Setup Residence Address</span>
+                            </div>
+                        </div>
+                        
+                        <div class="d-block wizard-left-main mt-4" :class="{ 'active' : step === 4 }">
+                            <div class="d-inline-block float-left wizard-icon">
+                                <span class="text">3</span>
+                            </div>
+                            <div class="d-inline-block w-50 wizard-text">
+                                <span class="d-block title font-weight-bold">Completed!</span>
+                                <span class="d-block small text-secondary text">Review and Submit</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="" class="col-md-7 " >
+                        <div v-if="step == 1">
+                            <h2>Account Settings</h2>
+                            <span class="small">Having Issues?</span>
+                            <span class="small font-weight-bold text-success">Get Help</span>
+                            <!-- form start -->
+                            <form class="mt-3">
+                                <div class="mt-2">
+                                    <span class="font-weight-bold">Company Name</span>
+                                    <input type="text" name="" id="" class="form-control" v-model="wizardForm.companyName" placeholder="" />
+                                </div>
+                                <div class="mt-2">
+                                    <span class="font-weight-bold">Your Name</span>
+                                    <input type="text" name="" id="" class="form-control" v-model="wizardForm.yourName" placeholder="" />
+                                </div>
+                            </form>
+                            <!-- form end -->
+                        </div>
+
+                        <div v-if="step == 2">
+                            <h2>Address Details</h2>
+                            <span class="small">Have a Different Address ?</span>
+                            <span class="small font-weight-bold text-success">Add Address</span>
+                            <!-- form start -->
+                            <form class="mt-3">
+                                <div class="mt-2">
+                                    <span class="font-weight-bold">Address Line</span>
+                                    <input type="text" name="" id="" class="form-control" v-model="wizardForm.adressLine" placeholder="Address Line" />
+                                </div>
+                                <div class="mt-2">
+                                    <span class="font-weight-bold">City</span>
+                                    <input type="text" name="" id="" class="form-control" v-model="wizardForm.city" placeholder="City" />
+                                </div>
+                            </form>
+                            <!-- form end -->
+                        </div>
+
+                        <div v-if="step == 3">
+                                <h2>Complete</h2>
+                                <span class="small">Complete Your Signup And Become A Member!</span>
+                                <span class="small font-weight-bold text-success">Add Address</span>
+                                <div class="col-md-12 mt-5">
+                                    <h5 class="">Accoun Settings:</h5>
+                                    <span class="d-block text-black">{{wizardForm.companyName}}</span>
+                                    <span class="d-block text-black">{{wizardForm.yourName}}</span>
+                                    <h5 class="mt-2">Adress Details:</h5>
+                                    <span class="d-block text-black">{{wizardForm.adressLine}}</span>
+                                    <span class="d-block text-black">{{wizardForm.city}}</span>
+                                </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-12 text-right">
+                        <m-button
+                            mclas="btn btn-success mt-3 btn-wizard"
+                            @click="prevStep"
+                            v-if="step != 1"
+                        >
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                            Previous Step
+                        </m-button>
+
+                        <m-button
+                            mclas="btn btn-success mt-3 btn-wizard"
+                            @click="nextStep"
+                            v-if="step != totalStep"
+                        >
+                            Next Step
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </m-button>
+
+                        <m-button
+                            mclas="btn btn-success mt-3 btn-wizard"
+                            @click="submitStep"
+                            v-if="step == 3"
+                        >
+                            Submit
+                            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                        </m-button>
+                    </div>
+
+                </div>
+            </div>
+            <!-- container end -->
+
+            <div class="confetti" v-if="success === true">
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="confetti-piece"></div>
+                <div class="icon">SUCCESS WİZARD</div>
+            </div>
+
+            <div class="customModal" v-if="showModal">
+                <div class="customModalBody text-center">
+                    <p>Sorry, looks like there are some errors detected, please try again.</p>
+                    <button class="btn btn-primary" @click.prevent="showModal = !showModal">Ok, got it!</button>
+                </div>                    
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.1.3/vue.js"></script>
+    <script src="component.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>
+
+<!-- <input type="text" name="" id="" class="form-control" value="" placeholder="" /> -->
